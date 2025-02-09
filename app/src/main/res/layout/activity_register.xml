@@ -1,0 +1,174 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="16dp">
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="400dp"
+        android:layout_height="125dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/horizontal_logo" />
+
+    <!-- Username Title -->
+    <TextView
+        android:id="@+id/usernameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logoImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="Username"
+        android:textColor="@color/text_color"
+        android:textSize="16sp" />
+
+    <!-- Username Field -->
+    <EditText
+        android:id="@+id/usernameEditText"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usernameTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_edit_text_background"
+        android:hint="Enter your username"
+        android:inputType="textPersonName"
+        android:padding="12dp"/>
+
+    <!-- Password Title -->
+    <TextView
+        android:id="@+id/passwordTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usernameEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="Password"
+        android:textColor="@color/text_color"
+        android:textSize="16sp" />
+
+    <!-- Password Field -->
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_edit_text_background"
+        android:hint="Enter your password"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:textColor="@color/text_color" />
+
+    <!-- Phone Number Title -->
+    <TextView
+        android:id="@+id/displayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="Dispaly Name"
+        android:textColor="@color/text_color"
+        android:textSize="16sp" />
+
+    <!-- Phone Number Field -->
+    <EditText
+        android:id="@+id/displayNameEditText"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/displayName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_edit_text_background"
+        android:hint="Enter your desplay name"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textColor="@color/text_color" />
+
+    <!-- Upload Photo Button -->
+    <TextView
+        android:id="@+id/phoneTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/displayNameEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="Phone Number"
+        android:textColor="@color/text_color"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/phoneEditText"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phoneTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_edit_text_background"
+        android:hint="Enter your phone number"
+        android:inputType="phone"
+        android:padding="12dp"
+        android:textColor="@color/text_color" />
+
+    <Button
+        android:id="@+id/uploadPhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phoneEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:text="Upload Photo"
+        android:textColor="@color/white" />
+
+<!--    <?xml version="1.0" encoding="utf-8"?>-->
+    <ScrollView
+        android:id="@+id/terms"
+        android:layout_marginTop="16dp"
+        android:layout_width="386dp"
+        android:layout_height="59dp"
+        android:layout_below="@id/uploadPhotoButton">
+
+        <TextView
+            android:id="@+id/terms_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:focusableInTouchMode="true"
+            android:inputType="textMultiLine"
+            android:lineSpacingExtra="4dp"
+            android:padding="16dp"
+            android:scrollbars="vertical"
+            android:scrollHorizontally="false"
+            android:text="@string/terms_of_service"
+            android:textSize="16sp" />
+    </ScrollView>
+
+
+    <!-- Terms of Service Checkbox -->
+    <CheckBox
+        android:id="@+id/termsCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/terms"
+        android:layout_marginTop="8dp"
+        android:text="I agree to the Terms of Service"
+        android:textColor="@color/text_color" />
+
+    <!-- Sign In Button -->
+    <Button
+        android:id="@+id/signInButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/termsCheckBox"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:text="Sign In"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Food Guard</string>
+
+    <string name="username_hint">Enter your username</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="display_name_hint">Enter your display name</string>
+    <string name="phone_hint">Enter your phone number</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="sign_in">Sign In</string>
+    <string name="terms_of_service">These Terms of Use govern your access to and use of the Food Sharing App, including its features, services, and content. By using the app, you agree to comply with these terms and</string>
+    <string name="agree_terms_of_service">I agree to the terms and conditions</string>
+    <string name="terms_error">You must agree to the Terms of Service.</string>
+</resources>
