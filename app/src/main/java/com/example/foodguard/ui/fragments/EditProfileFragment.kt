@@ -1,30 +1,28 @@
 package com.example.foodguard.ui.fragments
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.foodguard.R
 import com.example.foodguard.data.PostViewModel
 import com.example.foodguard.data.user.UserModel
-import com.example.foodguard.roomDB.DBHolder
 import com.example.foodguard.ui.auth.AuthActivity
+import com.example.foodguard.utils.decodeBase64ToImage
+import com.example.foodguard.utils.encodeImageToBase64
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class EditProfileFragment  : Fragment() {
     override fun onCreateView(
@@ -34,17 +32,56 @@ class EditProfileFragment  : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initPageData(view)
+        initListeners(view);
+    }
+
+
+
     private var connectedUserId : String = FirebaseAuth.getInstance().currentUser!!.uid
+    private var mainUser: UserModel? = null
 
     private val viewModel: PostViewModel by activityViewModels()
 
     private lateinit var imageView: ImageView
-    private var mainUser: UserModel? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun initPageData(view: View) {
         val usernameText = view.findViewById<TextView>(R.id.display_name_input)
+        val emailText = view.findViewById<TextView>(R.id.email_input)
         imageView = view.findViewById<ImageView>(R.id.profile_image)
+
+        viewModel.getUserById(connectedUserId).observe(viewLifecycleOwner) { user ->
+            user?.let {
+                mainUser = it
+                usernameText.text = it.display_name
+                emailText.text = it.email
+
+                if (it.profile_picture != "") {
+                    imageView.setImageBitmap(decodeBase64ToImage(it.profile_picture ?: ""))
+                } else {
+                    val googleImage = FirebaseAuth.getInstance().currentUser?.photoUrl
+
+                    if (googleImage !== null) {
+                        Glide.with(this)
+                            .load(googleImage)
+                            .circleCrop()
+                            .into(imageView)
+                        imageView.setImageURI(googleImage)
+                    }
+                }
+            } ?: run {
+                // Handle user not found
+                usernameText.text = "Guest"
+            }
+        }
+
+    }
+
+    private fun initListeners(view: View) {
 
         val logout = view.findViewById<ImageButton>(R.id.logout_button)
         logout.setOnClickListener {
@@ -54,37 +91,67 @@ class EditProfileFragment  : Fragment() {
             requireActivity().finish()
         }
 
-        viewModel.getUserById(connectedUserId).observe(viewLifecycleOwner) { user ->
-            Log.w("nitzan_test_connection", user.toString());
+        val changeProfile = view.findViewById<Button>(R.id.change_profile_photo_button)
 
-            user?.let {
-                mainUser = it
-                usernameText.text = it.display_name ?: "Guest"
+        changeProfile.setOnClickListener {
+            uploadImage()
+        }
 
-                if(it.profile_picture != "") {
-                    //imageView.setImageBitmap(decodeBase64ToImage(it.profile_picture ?: ""))
-                } else {
-                    val googleImage = FirebaseAuth.getInstance().currentUser?.photoUrl
-                    if(googleImage !== null) {
-                        Glide.with(this) // 'this' can be a Fragment or Activity context
-                            .load(googleImage)
-                            .into(imageView)
-                        imageView.setImageURI(googleImage)
-                    }
-                }
+        val updateProfile = view.findViewById<Button>(R.id.update_profile_button)
+        updateProfile.setOnClickListener {
+            updateProfileData(view)
+        }
 
-
-
-
-//                imageView.setOnClickListener {
-//                    pickImageFromGallery()
-//                }
-            } ?: run {
-                // Handle user not found
-                usernameText.text = "Guest"
-            }
+        val cancelProfile = view.findViewById<Button>(R.id.cancel_profile_button)
+        cancelProfile.setOnClickListener {
+            initPageData(view)
+            Toast.makeText(requireContext(), "Profile restored", Toast.LENGTH_SHORT).show()
         }
 
     }
+
+    private fun updateProfileData(view: View) {
+        val usernameText = view.findViewById<TextView>(R.id.display_name_input)
+        // TODO: I think that we need to disable the email change
+        val emailText = view.findViewById<TextView>(R.id.email_input)
+
+        mainUser?.let {
+            val newUser = UserModel(id = mainUser!!.id, profile_picture = mainUser!!.profile_picture, display_name = usernameText.text.toString(), email = emailText.text.toString())
+            viewModel.updateUser(newUser)
+
+            Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    val REQUEST_IMAGE_PICK = 1234
+
+    private fun uploadImage() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_IMAGE_PICK)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_IMAGE_PICK && resultCode == Activity.RESULT_OK) {
+            val uri: Uri? = data?.data
+            uri?.let {
+                imageView.setImageURI(uri)
+
+                var base64Image = encodeImageToBase64(uri, requireContext())
+                mainUser?.let {
+                    val newUser = UserModel(id = mainUser!!.id, profile_picture = base64Image, display_name = mainUser!!.display_name, email = mainUser!!.email)
+                    viewModel.updateUser(newUser)
+                }
+
+                Toast.makeText(requireContext(), "Profile picture updated successfully", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
 
 }
