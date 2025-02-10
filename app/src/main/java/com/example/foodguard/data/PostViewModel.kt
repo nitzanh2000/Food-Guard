@@ -13,8 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-data class PostsUiState(val postId: String = "")
-
 class PostViewModel : ViewModel() {
     private val postRepository = PostRepository()
     private val usersRepository = UserRepository()

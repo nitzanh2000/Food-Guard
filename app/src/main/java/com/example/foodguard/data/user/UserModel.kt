@@ -8,7 +8,6 @@ data class UserModel(
     @PrimaryKey val id: String = "",
     val email: String,
     val display_name: String,
-    val phone : String,
     val profile_picture: String?
 ) {
     fun toUserDto() : UserDTO {
@@ -16,7 +15,6 @@ data class UserModel(
             id = id,
             email = email,
             display_name = display_name,
-            phone = phone,
             profile_picture = profile_picture
         )
     }
@@ -28,7 +26,6 @@ data class UserModel(
                 id = user?.uid!!,
                 email = user.email!!,
                 display_name = user.displayName!!,
-                phone = user.phoneNumber!!,
                 profile_picture = ""
             )
         }
