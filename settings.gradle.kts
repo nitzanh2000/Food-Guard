@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Food Guard"
 include(":app")
- 
+include(":app:schemas")
