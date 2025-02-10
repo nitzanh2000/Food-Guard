@@ -13,13 +13,13 @@
         android:theme="@style/Theme.FoodGuard"
         tools:targetApi="31">
         <activity
-            android:name=".activities.EditProfileActivity"
+            android:name=".fragments.EditProfileFragment"
             android:exported="false" />
         <activity
-            android:name=".activities.EditPostActivity"
+            android:name=".fragments.EditPostFragment"
             android:exported="false" />
         <activity
-            android:name=".activities.UploadPostActivity"
+            android:name=".fragments.UploadPostFragment"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
