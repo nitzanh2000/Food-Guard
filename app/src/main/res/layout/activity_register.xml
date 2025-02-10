@@ -173,6 +173,6 @@
         android:text="Sign In"
         app:cornerRadius="8dp"
         android:backgroundTint="@color/button_color"
-        android:textColor="@color/black"/ />
+        android:textColor="@color/black" />
 
 </RelativeLayout>
