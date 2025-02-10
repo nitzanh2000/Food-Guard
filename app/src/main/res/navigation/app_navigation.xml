@@ -8,7 +8,7 @@
 <!--    need to be post list fragment-->
     <fragment
         android:id="@+id/postsListFragment"
-        android:name="com.example.foodguard.fragments.PostList.PostListFragment"
+        android:name="com.example.foodguard.ui.fragments.PostList.PostListFragment"
         android:label="Posts List"
         tools:layout="@layout/fragment_post_list">
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/postDetailsFragment"
-        android:name="com.example.foodguard.fragments.PostDetailsFragment"
+        android:name="com.example.foodguard.ui.fragments.PostDetailsFragment"
         android:label="Post Details"
         tools:layout="@layout/fragment_post_details">
 
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/uploadPostFragment"
-        android:name="com.example.foodguard.fragments.UploadPostFragment"
+        android:name="com.example.foodguard.ui.fragments.UploadPostFragment"
         android:label="Upload Post"
         tools:layout="@layout/fragment_upload_post">
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/editPostFragment"
-        android:name="com.example.foodguard.fragments.EditPostFragment"
+        android:name="com.example.foodguard.ui.fragments.EditPostFragment"
         android:label="Edit Post Fragment" >
         <argument
             android:name="review_id"
@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/profilePageFragment"
-        android:name="com.example.foodguard.fragments.EditProfileFragment"
+        android:name="com.example.foodguard.ui.fragments.EditProfileFragment"
         android:label="fragment_profile_page"
         tools:layout="@layout/fragment_edit_profile" >
         <action
