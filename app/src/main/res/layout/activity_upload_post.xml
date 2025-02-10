@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -62,7 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Browse files"
-                android:backgroundTint="@color/secondary"
+                app:cornerRadius="8dp"
+                android:backgroundTint="@color/button_color"
                 android:textColor="@color/black" />
 
         </LinearLayout>
@@ -83,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter description"
-            android:background="@drawable/white_rounded_background"
+            android:background="@drawable/rounded_edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp" />
 
@@ -116,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Servings"
-                    android:background="@drawable/white_rounded_background"
+                    android:background="@drawable/rounded_edit_text_background"
                     android:padding="8dp"
                     android:layout_marginTop="8dp"
                     android:drawableStart="@drawable/ic_servings"
@@ -145,7 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Address"
-                    android:background="@drawable/white_rounded_background"
+                    android:background="@drawable/rounded_edit_text_background"
                     android:padding="8dp"
                     android:layout_marginTop="8dp"
                     android:drawableStart="@drawable/ic_location"
@@ -171,9 +172,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter date and time"
-            android:background="@drawable/white_rounded_background"
+            android:background="@drawable/rounded_edit_text_background"
             android:padding="8dp"
             android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/upload_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Upload Post"
+            app:cornerRadius="8dp"
+            android:backgroundTint="@color/button_color"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
     android:padding="16dp">
 
@@ -122,9 +123,10 @@
         android:layout_below="@id/phoneEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:background="@drawable/button_background"
-        android:text="Upload Photo"
-        android:textColor="@color/white" />
+        app:cornerRadius="8dp"
+        android:backgroundTint="@color/button_color"
+        android:textColor="@color/black"
+        android:text="Upload Photo"/>
 
 <!--    <?xml version="1.0" encoding="utf-8"?>-->
     <ScrollView
@@ -168,8 +170,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/termsCheckBox"
         android:layout_marginTop="16dp"
-        android:background="@drawable/button_background"
         android:text="Sign In"
-        android:textColor="@color/white" />
+        app:cornerRadius="8dp"
+        android:backgroundTint="@color/button_color"
+        android:textColor="@color/black" />
 
 </RelativeLayout>

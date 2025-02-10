@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/reviewsListFragment">
+
+    <fragment
+        android:id="@+id/reviewsListFragment"
+        android:name="com.example.foodguard.fragments.PostDetailsFragment"
+        android:label="Reviews List"
+        tools:layout="@layout/fragment_post_list">
+<!--        <action-->
+<!--            android:id="@+id/action_reviewsListFragment_to_reviewDetailsFragment"-->
+<!--            app:destination="@id/PostDetailsFragment" />-->
+    </fragment>
+
+</navigation>

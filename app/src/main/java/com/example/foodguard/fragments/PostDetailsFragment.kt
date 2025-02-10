@@ -37,7 +37,7 @@ class PostDetailsFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyPostFragmentRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                //adapter = MyPostFragmentRecyclerViewAdapter(PlaceholderContent.ITEMS)
             }
         }
         return view
