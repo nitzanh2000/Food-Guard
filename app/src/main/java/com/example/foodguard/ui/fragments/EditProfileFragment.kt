@@ -1,6 +1,7 @@
 package com.example.foodguard.ui.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -20,6 +22,7 @@ import com.example.foodguard.R
 import com.example.foodguard.data.PostViewModel
 import com.example.foodguard.data.user.UserModel
 import com.example.foodguard.roomDB.DBHolder
+import com.example.foodguard.ui.auth.AuthActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -31,10 +34,11 @@ class EditProfileFragment  : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
+    private var connectedUserId : String = FirebaseAuth.getInstance().currentUser!!.uid
+
     private val viewModel: PostViewModel by activityViewModels()
 
     private lateinit var imageView: ImageView
-    private var userId = "/0yJw5Nkp2dIPt51GSP9G"
     private var mainUser: UserModel? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,28 +46,15 @@ class EditProfileFragment  : Fragment() {
         val usernameText = view.findViewById<TextView>(R.id.display_name_input)
         imageView = view.findViewById<ImageView>(R.id.profile_image)
 
-        val db = FirebaseFirestore.getInstance()
-        db.collection("post").get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    Log.d("Firestore", "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.e("Firestore", "Error fetching documents", exception)
-            }
+        val logout = view.findViewById<ImageButton>(R.id.logout_button)
+        logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(requireContext(), AuthActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
 
-//        Log.w("nitzan_test_connection", DBHolder.getDatabase().postDad().findById("3kvz1V0swFXUyEuHx87B").toString())
-
-        viewModel.getAllPosts().observe(viewLifecycleOwner, {
-            if (it.isEmpty()) viewModel.invalidatePosts()
-            val reviewsList = it
-
-            Log.w("nitzan_test_connection", reviewsList.size.toString());
-        })
-
-
-        viewModel.getUserById(userId).observe(viewLifecycleOwner) { user ->
+        viewModel.getUserById(connectedUserId).observe(viewLifecycleOwner) { user ->
             Log.w("nitzan_test_connection", user.toString());
 
             user?.let {
