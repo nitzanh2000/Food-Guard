@@ -35,20 +35,20 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.menu_home -> {
                     // Navigate to the home fragment when the home button is clicked
-                    navController.navigate(R.id.reviewsListFragment)
+                    navController.navigate(R.id.postsListFragment)
                     Toast.makeText(this, "home", Toast.LENGTH_SHORT)
                     true
                 }
                 R.id.menu_add -> {
                     Toast.makeText(this, "add", Toast.LENGTH_SHORT)
 
-                    navController.navigate(R.id.reviewsListFragment)
+                    navController.navigate(R.id.uploadPostFragment)
                     true
                 }
                 R.id.menu_profile -> {
                     Toast.makeText(this, "profile", Toast.LENGTH_SHORT)
 
-                    navController.navigate(R.id.reviewsListFragment)
+                    navController.navigate(R.id.profilePageFragment)
                     true
                 }
                 // Add other cases for different items in the bottom navigation

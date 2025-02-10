@@ -7,7 +7,7 @@
     tools:context="com.example.foodguard.fragments.PostDetailsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/students_list"
+        android:id="@+id/posts_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="56dp"

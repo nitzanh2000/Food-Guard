@@ -3,16 +3,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/reviewsListFragment">
+    app:startDestination="@id/postsListFragment">
 
+<!--    need to be post list fragment-->
     <fragment
-        android:id="@+id/reviewsListFragment"
-        android:name="com.example.foodguard.fragments.PostDetailsFragment"
-        android:label="Reviews List"
+        android:id="@+id/postsListFragment"
+        android:name="com.example.foodguard.fragments.PostList.PostListFragment"
+        android:label="Posts List"
         tools:layout="@layout/fragment_post_list">
-<!--        <action-->
-<!--            android:id="@+id/action_reviewsListFragment_to_reviewDetailsFragment"-->
-<!--            app:destination="@id/PostDetailsFragment" />-->
+        <action
+            android:id="@+id/action_postsListFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/postDetailsFragment"
+        android:name="com.example.foodguard.fragments.PostDetailsFragment"
+        android:label="Post Details"
+        tools:layout="@layout/fragment_post_details">
+
+        <argument
+            android:name="post_id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_postDetailsFragment_to_editPostFragment"
+            app:destination="@id/editPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/uploadPostFragment"
+        android:name="com.example.foodguard.fragments.UploadPostFragment"
+        android:label="Upload Post"
+        tools:layout="@layout/fragment_upload_post">
+        <action
+            android:id="@+id/action_uploadPostFragment_to_postsListFragment"
+            app:destination="@id/postsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPostFragment"
+        android:name="com.example.foodguard.fragments.EditPostFragment"
+        android:label="Edit Post Fragment" >
+        <argument
+            android:name="review_id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_editPostFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment" />
+        <action
+            android:id="@+id/action_editPostFragment_to_postsListFragment"
+            app:destination="@id/postsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profilePageFragment"
+        android:name="com.example.foodguard.fragments.EditProfileFragment"
+        android:label="fragment_profile_page"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_profilePageFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment" />
+    </fragment>
 </navigation>
