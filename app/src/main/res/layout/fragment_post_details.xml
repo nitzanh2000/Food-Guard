@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -20,7 +20,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profile_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -28,6 +28,7 @@
                 android:contentDescription="Profile Photo"
                 android:layout_marginEnd="8dp"
                 android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/CircleImageViewStyle"
                 android:background="@drawable/circle_background" />
 
             <TextView
