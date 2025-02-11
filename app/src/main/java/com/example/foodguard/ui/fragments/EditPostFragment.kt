@@ -1,6 +1,7 @@
 package com.example.foodguard.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,5 +17,12 @@ class EditPostFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_post, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var currentPostId = arguments?.getString("post_id");
+        Log.w("currentPostId", currentPostId.toString())
     }
 }
