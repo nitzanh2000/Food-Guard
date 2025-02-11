@@ -27,6 +27,7 @@ import com.example.foodguard.data.PostViewModel
 import com.example.foodguard.data.user.UserModel
 import com.example.foodguard.ui.auth.AuthActivity
 import com.example.foodguard.ui.fragments.PostList.PostAdapter
+import com.example.foodguard.ui.fragments.PostList.PostListFragmentDirections
 import com.example.foodguard.utils.decodeBase64ToImage
 import com.example.foodguard.utils.encodeImageToBase64
 import com.google.firebase.auth.FirebaseAuth
@@ -66,10 +67,13 @@ class EditProfileFragment  : Fragment() {
     private fun initPostList(it: Context) {
         postsList.run {
             layoutManager = LinearLayoutManager(context)
-            adapter = PostAdapter{ id ->
-                val action = EditProfileFragmentDirections.actionProfilePageFragmentToPostDetailsFragment(id)
-                findNavController().navigate(action)
-            }
+            adapter = PostAdapter(
+                { id ->
+                    val onPostEditClick = EditProfileFragmentDirections.actionProfilePageFragmentToEditPostFragment(id)
+                    findNavController().navigate(onPostEditClick)
+                }, { id ->
+                    viewModel.deletePostById(id)
+                })
             addItemDecoration(
                 DividerItemDecoration(
                     context,
@@ -116,7 +120,6 @@ class EditProfileFragment  : Fragment() {
                 usernameText.text = "Guest"
             }
         }
-
     }
 
     private fun initListeners(view: View) {

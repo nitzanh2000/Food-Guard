@@ -39,10 +39,13 @@ class PostListFragment : Fragment() {
     private fun initPostList() {
         postsList.run {
             layoutManager = LinearLayoutManager(context)
-            adapter = PostAdapter{ id ->
-                val action = PostListFragmentDirections.actionPostsListFragmentToPostDetailsFragment(id)
-                findNavController().navigate(action)
-            }
+            adapter = PostAdapter(
+                { id ->
+                    val onPostEditClick = PostListFragmentDirections.actionPostsListFragmentToEditPostFragment(id)
+                    findNavController().navigate(onPostEditClick)
+                }, { id ->
+                    viewModel.deletePostById(id)
+                })
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
     }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Post Content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,34 +14,60 @@
         android:padding="16dp"
         android:background="@drawable/gray_rounded_background">
 
-        <!-- Profile section -->
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/profile_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_profile_placeholder"
-                android:contentDescription="Profile Photo"
-                android:layout_marginEnd="8dp"
-                android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/CircleImageViewStyle"
-                android:background="@drawable/circle_background" />
-
-            <TextView
-                android:id="@+id/username"
+            <LinearLayout
+                android:id="@+id/profile_section"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Israel Israeli"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-        </LinearLayout>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_profile_placeholder"
+                    android:contentDescription="Profile Photo"
+                    android:layout_marginEnd="8dp"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/CircleImageViewStyle"
+                    android:background="@drawable/circle_background" />
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Israel Israeli"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <!-- Edit Button -->
+            <ImageButton
+                android:id="@+id/edit_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="Edit Post"
+                android:scaleType="fitCenter" />
+
+            <!-- Delete Button -->
+            <ImageButton
+                android:id="@+id/delete_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_toStartOf="@id/edit_button"
+                android:background="@null"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="Delete Post"
+                android:scaleType="fitCenter" />
+        </RelativeLayout>
 
         <!-- Post image -->
         <ImageView
@@ -57,7 +84,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_gravity="center_horizontal"
             android:text="Hot and delicious meat soup."
             android:textSize="14sp"
             android:textColor="@color/black" />
@@ -102,7 +128,6 @@
                 android:text="Ben Yehuda 10, Tel Aviv"
                 android:textSize="14sp"
                 android:textColor="@color/black" />
-
         </LinearLayout>
 
         <!-- Date and time row -->
@@ -128,9 +153,6 @@
                 android:text="10/11/2024 19:00"
                 android:textSize="14sp"
                 android:textColor="@color/black" />
-
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

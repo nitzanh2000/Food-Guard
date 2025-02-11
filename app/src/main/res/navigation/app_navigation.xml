@@ -11,24 +11,14 @@
         android:name="com.example.foodguard.ui.fragments.PostList.PostListFragment"
         android:label="Posts List"
         tools:layout="@layout/fragment_post_list">
-        <action
-            android:id="@+id/action_postsListFragment_to_postDetailsFragment"
-            app:destination="@id/postDetailsFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/postDetailsFragment"
-        android:name="com.example.foodguard.ui.fragments.PostDetailsFragment"
-        android:label="Post Details"
-        tools:layout="@layout/fragment_post_details">
-
         <argument
             android:name="post_id"
             app:argType="string" />
         <action
-            android:id="@+id/action_postDetailsFragment_to_editPostFragment"
+            android:id="@+id/action_postsListFragment_to_editPostFragment"
             app:destination="@id/editPostFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/uploadPostFragment"
         android:name="com.example.foodguard.ui.fragments.UploadPostFragment"
@@ -43,11 +33,8 @@
         android:name="com.example.foodguard.ui.fragments.EditPostFragment"
         android:label="Edit Post Fragment" >
         <argument
-            android:name="review_id"
+            android:name="post_id"
             app:argType="string" />
-        <action
-            android:id="@+id/action_editPostFragment_to_postDetailsFragment"
-            app:destination="@id/postDetailsFragment" />
         <action
             android:id="@+id/action_editPostFragment_to_postsListFragment"
             app:destination="@id/postsListFragment" />
@@ -55,10 +42,13 @@
     <fragment
         android:id="@+id/profilePageFragment"
         android:name="com.example.foodguard.ui.fragments.EditProfileFragment"
-        android:label="fragment_profile_page"
+        android:label="Profile Page"
         tools:layout="@layout/fragment_edit_profile" >
+        <argument
+            android:name="post_id"
+            app:argType="string" />
         <action
-            android:id="@+id/action_profilePageFragment_to_postDetailsFragment"
-            app:destination="@id/postDetailsFragment" />
+            android:id="@+id/action_profilePageFragment_to_editPostFragment"
+            app:destination="@id/editPostFragment" />
     </fragment>
 </navigation>
