@@ -177,7 +177,8 @@
             android:padding="8dp"
             android:hint="Select date and time"
             android:focusable="false"
-            android:clickable="true" />
+            android:clickable="true"
+            android:longClickable="false"/>
 
         <Button
             android:id="@+id/upload_button"
