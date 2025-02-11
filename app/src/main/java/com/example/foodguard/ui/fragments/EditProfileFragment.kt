@@ -38,6 +38,7 @@ class EditProfileFragment  : Fragment() {
 
         initPageData(view)
         initListeners(view);
+        //TODO: add list of posts that the author is the connected user
     }
 
 
