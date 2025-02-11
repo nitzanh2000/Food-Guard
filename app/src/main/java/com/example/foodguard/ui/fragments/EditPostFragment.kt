@@ -8,6 +8,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -15,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.foodguard.R
 import com.example.foodguard.data.PostViewModel
@@ -27,6 +30,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.FirebaseAuth
+import getCities
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -52,6 +57,14 @@ class EditPostFragment : Fragment() {
         var currentPostId = arguments?.getString("post_id");
         var currentPost : PostWithAuthor ?= null;
 
+        val addressAutoComplete = view.findViewById<AutoCompleteTextView>(R.id.address_input)
+
+        lifecycleScope.launch {
+            val cities = getCities()
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, cities)
+            addressAutoComplete.setAdapter(adapter)
+        }
+
         viewModel.getAllPosts().observe(viewLifecycleOwner, {
             if (it.isEmpty()) viewModel.refreshPostsFromRemote()
 
@@ -62,13 +75,13 @@ class EditPostFragment : Fragment() {
             }
 
             val description = view.findViewById<TextView>(R.id.description_input)
-            val address = view.findViewById<TextView>(R.id.address_input)
+            val address = view.findViewById<AutoCompleteTextView>(R.id.address_input)
             val date = view.findViewById<TextView>(R.id.date_time_input) // TODO: change to date picker
             val servings = view.findViewById<TextView>(R.id.servings_input)
             val isDelivered = view.findViewById<CheckBox>(R.id.mark_as_delivered)
 
             description.text = currentPost?.post?.description
-            address.text = currentPost?.post?.address
+            address.setText(currentPost?.post?.address)
             date.text = currentPost?.post?.expiration_date
             servings.text = currentPost?.post?.serving.toString()
             isDelivered.isChecked = currentPost?.post?.is_delivered ?: false

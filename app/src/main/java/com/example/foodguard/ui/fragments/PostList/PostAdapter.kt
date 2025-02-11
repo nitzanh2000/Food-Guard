@@ -60,8 +60,10 @@ class PostAdapter(val onPostEditClick: (String) -> Unit, val onPostDeleteClick: 
         }
 
         currentPost.post.image?.let {
-            val bitmap = decodeBase64ToImage(it)
-            holder.image.setImageBitmap(bitmap)
+            if (it != "") {
+                val bitmap = decodeBase64ToImage(it)
+                holder.image.setImageBitmap(bitmap)
+            }
         }
 
         val editButton: ImageButton = holder.itemView.findViewById(R.id.edit_button)
