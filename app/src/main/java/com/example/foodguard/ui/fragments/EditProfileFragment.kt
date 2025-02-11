@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +44,6 @@ class EditProfileFragment  : Fragment() {
 
         initPageData(view)
         initListeners(view);
-        //TODO: add list of posts that the author is the connected user
         setupPostList(view)
     }
 
@@ -66,10 +64,13 @@ class EditProfileFragment  : Fragment() {
     private fun initPostList(it: Context) {
         postsList.run {
             layoutManager = LinearLayoutManager(context)
-            adapter = PostAdapter{ id ->
-                val action = EditProfileFragmentDirections.actionProfilePageFragmentToPostDetailsFragment(id)
-                findNavController().navigate(action)
-            }
+            adapter = PostAdapter(
+                { id ->
+                    val onPostEditClick = EditProfileFragmentDirections.actionProfilePageFragmentToEditPostFragment(id)
+                    findNavController().navigate(onPostEditClick)
+                }, { id ->
+                    viewModel.deletePostById(id)
+                })
             addItemDecoration(
                 DividerItemDecoration(
                     context,
@@ -116,7 +117,6 @@ class EditProfileFragment  : Fragment() {
                 usernameText.text = "Guest"
             }
         }
-
     }
 
     private fun initListeners(view: View) {
@@ -145,18 +145,13 @@ class EditProfileFragment  : Fragment() {
             initPageData(view)
             Toast.makeText(requireContext(), "Profile restored", Toast.LENGTH_SHORT).show()
         }
-
-
-
     }
 
     private fun updateProfileData(view: View) {
         val usernameText = view.findViewById<TextView>(R.id.display_name_input)
-        // TODO: I think that we need to disable the email change
-        val emailText = view.findViewById<TextView>(R.id.email_input)
 
         mainUser?.let {
-            val newUser = UserModel(id = mainUser!!.id, profile_picture = mainUser!!.profile_picture, display_name = usernameText.text.toString(), email = emailText.text.toString())
+            val newUser = UserModel(id = mainUser!!.id, profile_picture = mainUser!!.profile_picture, display_name = usernameText.text.toString(), email = mainUser!!.email)
             viewModel.updateUser(newUser)
 
             Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()

@@ -53,7 +53,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == RESULT_OK) {
-            viewModel.register(::toApp)
+            viewModel.register(::toApp, this)
         }
     }
 

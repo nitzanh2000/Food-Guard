@@ -20,7 +20,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profile_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -28,6 +28,7 @@
                 android:contentDescription="Profile Photo"
                 android:layout_marginEnd="8dp"
                 android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/CircleImageViewStyle"
                 android:background="@drawable/circle_background" />
 
             <TextView
@@ -120,6 +121,7 @@
                     android:background="@drawable/rounded_edit_text_background"
                     android:padding="12dp"
                     android:layout_marginTop="8dp"
+                    android:inputType="number"
                     android:drawableStart="@drawable/ic_servings"
                     android:drawablePadding="8dp" />
 

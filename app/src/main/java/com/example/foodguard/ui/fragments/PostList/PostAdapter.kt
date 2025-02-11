@@ -3,15 +3,18 @@ package com.example.foodguard.ui.fragments.PostList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodguard.R
 import com.example.foodguard.data.post.PostWithAuthor
 import com.example.foodguard.utils.decodeBase64ToImage
+import com.google.firebase.auth.FirebaseAuth
 
-class PostAdapter(val onPostClick: (String) -> Unit) :
+class PostAdapter(val onPostEditClick: (String) -> Unit, val onPostDeleteClick: (String) -> Unit) :
     RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+    private var connectedUserId : String = FirebaseAuth.getInstance().currentUser!!.uid
 
     class PostViewHolder(postView: View) : RecyclerView.ViewHolder(postView) {
         val description: TextView = postView.findViewById(R.id.post_description)
@@ -56,9 +59,25 @@ class PostAdapter(val onPostClick: (String) -> Unit) :
             holder.image.setImageBitmap(bitmap)
         }
 
-//        holder.itemView.setOnClickListener {
-//            onReviewClicked(currentPost.review.id)
-//        }
+        val editButton: ImageButton = holder.itemView.findViewById(R.id.edit_button)
+        val deleteButton: ImageButton = holder.itemView.findViewById(R.id.delete_button)
+
+        if(connectedUserId == currentPost?.author?.id) {
+            editButton.visibility = View.VISIBLE
+            deleteButton.visibility = View.VISIBLE
+        } else {
+            editButton.visibility = View.GONE
+            deleteButton.visibility = View.GONE
+        }
+
+        editButton.setOnClickListener {
+            onPostEditClick(currentPost.post.id)
+        }
+
+        deleteButton.setOnClickListener {
+            onPostDeleteClick(currentPost.post.id)
+        }
+
     }
 
     fun updatePostsList(newPostsList: List<PostWithAuthor>) {

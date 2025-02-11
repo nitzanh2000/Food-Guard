@@ -7,6 +7,7 @@ data class PostDTO(
     val address: String,
     val author_id: String,
     val expiration_date: String,
+    val is_delivered: Boolean = false,
     val id: String? = null
 ) {
     fun toPostModel(): PostModel {
@@ -17,7 +18,8 @@ data class PostDTO(
             image = image,
             address = address,
             serving =  serving,
-            expiration_date = expiration_date
+            expiration_date = expiration_date,
+            is_delivered = is_delivered
         )
     }
 }

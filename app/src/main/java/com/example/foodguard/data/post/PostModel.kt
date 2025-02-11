@@ -22,7 +22,8 @@ data class PostModel(
     @ColumnInfo(name = "image") val image : String,
     @ColumnInfo(name = "address") val address: String,
     @ColumnInfo(name = "serving") val serving: Int,
-    @ColumnInfo(name = "expiration_date") val expiration_date: String
+    @ColumnInfo(name = "expiration_date") val expiration_date: String,
+    @ColumnInfo(name = "is_delivered") val is_delivered: Boolean = false
 ) {
 
     fun toPostDto(): PostDTO {
@@ -33,7 +34,8 @@ data class PostModel(
             image = image,
             address = address,
             serving =  serving,
-            expiration_date = expiration_date
+            expiration_date = expiration_date,
+            is_delivered = is_delivered
         )
     }
 }
