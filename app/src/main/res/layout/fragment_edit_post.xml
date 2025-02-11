@@ -176,7 +176,10 @@
             android:hint="Enter date and time"
             android:background="@drawable/rounded_edit_text_background"
             android:padding="12dp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:focusable="false"
+            android:clickable="true"
+            android:longClickable="false" />
 
         <!-- Mark as delivered checkbox -->
         <CheckBox
