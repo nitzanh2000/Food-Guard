@@ -69,14 +69,31 @@
                 android:scaleType="fitCenter" />
         </RelativeLayout>
 
-        <!-- Post image -->
-        <ImageView
-            android:id="@+id/post_image"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_post_placeholder"
-            android:contentDescription="Post Image" />
+            android:layout_height="wrap_content">
+
+            <!-- Post image -->
+            <ImageView
+                android:id="@+id/post_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_post_placeholder"
+                android:contentDescription="Post Image" />
+
+            <!-- Gray sign with 50% transparency and text "Delivered" centered on the image -->
+            <TextView
+                android:id="@+id/delivered_sign"
+                android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="Delivered"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:background="#80000000"/>
+        </RelativeLayout>
 
         <!-- Description -->
         <TextView
