@@ -8,6 +8,9 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -15,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.foodguard.R
@@ -27,6 +31,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.FirebaseAuth
+import getCities
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -52,18 +58,43 @@ class UploadPostFragment : Fragment() {
 
         initPageData(view)
         setUploadListener()
+
+        val addressAutoComplete: AutoCompleteTextView = view.findViewById(R.id.address_input)
+
+//        val addressSpinner = view?.findViewById<Spinner>(R.id.address_input)
+
+        // Inside an activity or fragment
+        lifecycleScope.launch {
+            val cities = getCities()
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, cities)
+            adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+            addressAutoComplete.setAdapter(adapter)
+        }
+
+        addressAutoComplete?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedAddress = parent?.getItemAtPosition(position).toString()
+                // Handle selected address, store or display it as needed
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle case when nothing is selected (optional)
+            }
+        }
+
+
     }
 
     private fun setUploadListener() {
         val descriptionInput = view?.findViewById<TextView>(R.id.description_input) 
-        val addressInput = view?.findViewById<TextView>(R.id.address_input)
+//        val addressInput = view?.findViewById<Spinner>(R.id.address_input)
         val dateInput = view?.findViewById<TextView>(R.id.date_time_input)
         val servingsInput = view?.findViewById<TextView>(R.id.servings_input)
         
         val uploadButton = view?.findViewById<Button>(R.id.upload_button)
         uploadButton?.setOnClickListener {
             val description = descriptionInput?.text.toString()
-            val address = addressInput?.text.toString()
+            val address = "addressInput?.text.toString()"
             val date = dateInput?.text.toString()
             val servings = servingsInput?.text.toString().toInt()
             

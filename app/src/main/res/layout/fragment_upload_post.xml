@@ -143,16 +143,14 @@
                     android:textColor="@color/black"
                     android:layout_gravity="center_horizontal" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/address_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Address"
                     android:background="@drawable/rounded_edit_text_background"
                     android:padding="8dp"
                     android:layout_marginTop="8dp"
-                    android:drawableStart="@drawable/ic_location"
-                    android:drawablePadding="8dp" />
+                    android:hint="Select Address" />
 
             </LinearLayout>
 
