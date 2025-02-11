@@ -84,12 +84,12 @@
 
             <!-- Gray sign with 50% transparency and text "Delivered" centered on the image -->
             <TextView
-                android:id="@+id/delivered_sign"
+                android:id="@+id/unavailable_sign"
                 android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Delivered"
+            android:text="Unavailable"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:background="#80000000"/>
