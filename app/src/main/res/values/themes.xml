@@ -19,16 +19,17 @@
     <!-- Time Picker Custom Theme -->
     <style name="CustomTimePicker" parent="ThemeOverlay.Material3.MaterialTimePicker">
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorOnPrimary">@color/colorPrimary</item>
-        <item name="colorSurface">@color/secondary</item>
+        <item name="colorSurface">@color/background</item>
         <item name="colorOnSurface">@color/primary</item>
 
-        <!-- AM/PM Button Colors -->
-        <item name="colorPrimaryContainer">@color/secondary</item> <!-- AM/PM button background -->
-        <item name="colorOnPrimaryContainer">@color/colorAccent</item> <!-- AM/PM button text -->
+        <item name="colorPrimaryContainer">@color/primary</item> <!-- HH/MM button background -->
+        <item name="colorOnPrimaryContainer">@color/white</item> <!-- HH/MM button text -->
 
-        <item name="colorSurfaceVariant">@color/secondary</item>
-        <item name="colorOnSurfaceVariant">@color/primary</item>
+        <item name="colorTertiaryContainer">@color/primary</item> <!-- AM/PM button background -->
+        <item name="colorOnTertiaryContainer">@color/white</item> <!-- AM/PM button text -->
+
+        <item name="colorSurfaceVariant">@color/background</item> <!-- clock circle bg -->
+        <item name="colorOnSurfaceVariant">@color/primary</item> <!-- left text and icon -->
 
     </style>
 

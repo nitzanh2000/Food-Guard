@@ -139,9 +139,10 @@ class UploadPostFragment : Fragment() {
 
             // Open Time Picker after selecting date
             val timePicker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H) // Use TimeFormat.CLOCK_24H for 24-hour format
+                .setTimeFormat(TimeFormat.CLOCK_24H) // Use TimeFormat.CLOCK_24H for 24-hour format
                 .setHour(calendar.get(Calendar.HOUR_OF_DAY))
                 .setMinute(calendar.get(Calendar.MINUTE))
+                .setTheme(R.style.CustomTimePicker) // Apply custom theme
                 .setTitleText("Select Time")
                 .build()
 
