@@ -12,4 +12,28 @@
     <color name="hint_color">#888888</color>
     <color name="button_color">#DDF1D2</color>
     <color name="button_text_color">#FFFFFF</color>
+
+
+        <!-- Primary green color -->
+        <color name="green_primary">#388E3C</color> <!-- Dark green -->
+
+        <!-- Accent light green color -->
+        <color name="green_accent">#A5D6A7</color> <!-- Light green -->
+
+        <!-- Background color for time picker -->
+        <color name="green_background">#C8E6C9</color> <!-- Very light green -->
+
+        <!-- Text color (dark green) -->
+        <color name="green_text">#2C6B2F</color> <!-- Dark green text -->
+
+        <!-- Secondary text color (light green) -->
+        <color name="green_secondary_text">#4CAF50</color> <!-- Lighter green for secondary text -->
+
+        <!-- Surface background color (light and soft green) -->
+        <color name="green_surface">#E8F5E9</color> <!-- Soft green surface -->
+
+        <!-- Button color (light green) -->
+        <color name="green_button">#81C784</color> <!-- Soft green button -->
+
+
 </resources>

@@ -2,6 +2,7 @@ package com.example.foodguard.ui.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,6 +15,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -51,7 +53,7 @@ class UploadPostFragment : Fragment() {
     private val viewModel: PostViewModel by activityViewModels()
 
     private lateinit var imageViewUpload: ImageView
-    private lateinit var base64Image: String
+    private var base64Image: String = "";
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -96,23 +98,28 @@ class UploadPostFragment : Fragment() {
             val description = descriptionInput?.text.toString()
             val address = "addressInput?.text.toString()"
             val date = dateInput?.text.toString()
-            val servings = servingsInput?.text.toString().toInt()
-            
-            val post = PostModel(
-                description = description,
-                address = address,
-                expiration_date = date,
-                serving = servings,
-                author_id = connectedUserId,
-                image = base64Image
-            )
-            viewModel.addPost(post)
+            val servings = servingsInput?.text.toString()
 
-            Toast.makeText(requireContext(), "Post uploaded successfully", Toast.LENGTH_SHORT).show()
+            if (base64Image == "" || description == "" || address == "" || date == "" || servings == "") {
+                Toast.makeText(requireContext(), "Oops, maybe you missed some filed..", Toast.LENGTH_LONG)
+                    .show()
+            } else {
+                val post = PostModel(
+                    description = description,
+                    address = address,
+                    expiration_date = date,
+                    serving = servings.toInt(),
+                    author_id = connectedUserId,
+                    image = base64Image
+                )
+                viewModel.addPost(post)
 
-            val navController = findNavController()
-            navController.navigate(R.id.action_uploadPostFragment_to_postsListFragment)
+                Toast.makeText(requireContext(), "Post uploaded successfully", Toast.LENGTH_SHORT)
+                    .show()
 
+                val navController = findNavController()
+                navController.navigate(R.id.action_uploadPostFragment_to_postsListFragment)
+            }
         }
     }
 
@@ -170,9 +177,10 @@ class UploadPostFragment : Fragment() {
 
             // Open Time Picker after selecting date
             val timePicker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H) // Use TimeFormat.CLOCK_24H for 24-hour format
+                .setTimeFormat(TimeFormat.CLOCK_24H) // Use TimeFormat.CLOCK_24H for 24-hour format
                 .setHour(calendar.get(Calendar.HOUR_OF_DAY))
                 .setMinute(calendar.get(Calendar.MINUTE))
+                .setTheme(R.style.CustomTimePicker) // Apply custom theme
                 .setTitleText("Select Time")
                 .build()
 
