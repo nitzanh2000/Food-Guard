@@ -1,10 +1,12 @@
 package com.example.foodguard.ui.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +17,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.foodguard.R
 import com.example.foodguard.data.PostViewModel
 import com.example.foodguard.data.user.UserModel
 import com.example.foodguard.ui.auth.AuthActivity
+import com.example.foodguard.ui.fragments.PostList.PostAdapter
 import com.example.foodguard.utils.decodeBase64ToImage
 import com.example.foodguard.utils.encodeImageToBase64
 import com.google.firebase.auth.FirebaseAuth
@@ -39,8 +46,38 @@ class EditProfileFragment  : Fragment() {
         initPageData(view)
         initListeners(view);
         //TODO: add list of posts that the author is the connected user
+        setupPostList(view)
     }
 
+    private lateinit var postsList: RecyclerView
+
+    private fun setupPostList(view: View) {
+        postsList = view.findViewById(R.id.profile_page_posts_list)
+        context?.let { initPostList(it) }
+        viewModel.getAllPostsByUserId(connectedUserId).observe(viewLifecycleOwner, {
+            it?.let {
+                if(it.isEmpty()) viewModel.invalidatePosts()
+                (postsList.adapter as? PostAdapter)?.updatePostsList(it)
+            }
+
+        })
+    }
+
+    private fun initPostList(it: Context) {
+        postsList.run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = PostAdapter{ id ->
+                val action = EditProfileFragmentDirections.actionProfilePageFragmentToPostDetailsFragment(id)
+                findNavController().navigate(action)
+            }
+            addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    LinearLayoutManager.VERTICAL
+                )
+            )
+        }
+    }
 
 
     private var connectedUserId : String = FirebaseAuth.getInstance().currentUser!!.uid
@@ -108,6 +145,8 @@ class EditProfileFragment  : Fragment() {
             initPageData(view)
             Toast.makeText(requireContext(), "Profile restored", Toast.LENGTH_SHORT).show()
         }
+
+
 
     }
 

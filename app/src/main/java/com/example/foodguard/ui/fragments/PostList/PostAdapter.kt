@@ -45,8 +45,10 @@ class PostAdapter(val onPostClick: (String) -> Unit) :
         holder.authorName.text = currentPost.author.display_name
 
         currentPost.author.profile_picture?.let {
-            val bitmap = decodeBase64ToImage(it)
-            holder.authorImage.setImageBitmap(bitmap)
+            if (it != "") {
+                val bitmap = decodeBase64ToImage(it)
+                holder.authorImage.setImageBitmap(bitmap)
+            }
         }
 
         currentPost.post.image?.let {
