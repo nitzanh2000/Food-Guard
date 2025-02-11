@@ -61,42 +61,25 @@ class UploadPostFragment : Fragment() {
         initPageData(view)
         setUploadListener()
 
-        val addressAutoComplete: AutoCompleteTextView = view.findViewById(R.id.address_input)
+        val addressAutoComplete = view.findViewById<AutoCompleteTextView>(R.id.address_input)
 
-//        val addressSpinner = view?.findViewById<Spinner>(R.id.address_input)
-
-        // Inside an activity or fragment
         lifecycleScope.launch {
             val cities = getCities()
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, cities)
-            adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
             addressAutoComplete.setAdapter(adapter)
         }
-
-        addressAutoComplete?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedAddress = parent?.getItemAtPosition(position).toString()
-                // Handle selected address, store or display it as needed
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Handle case when nothing is selected (optional)
-            }
-        }
-
-
     }
 
     private fun setUploadListener() {
         val descriptionInput = view?.findViewById<TextView>(R.id.description_input) 
-//        val addressInput = view?.findViewById<Spinner>(R.id.address_input)
+        val addressInput = view?.findViewById<AutoCompleteTextView>(R.id.address_input)
         val dateInput = view?.findViewById<TextView>(R.id.date_time_input)
         val servingsInput = view?.findViewById<TextView>(R.id.servings_input)
         
         val uploadButton = view?.findViewById<Button>(R.id.upload_button)
         uploadButton?.setOnClickListener {
             val description = descriptionInput?.text.toString()
-            val address = "addressInput?.text.toString()"
+            val address = addressInput?.text.toString()
             val date = dateInput?.text.toString()
             val servings = servingsInput?.text.toString()
 
