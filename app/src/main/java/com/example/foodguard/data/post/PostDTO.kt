@@ -3,10 +3,10 @@ package com.example.foodguard.data.post
 data class PostDTO(
     val description: String = "",
     val serving: Int = 0,
-    val image: String,
-    val address: String,
-    val author_id: String,
-    val expiration_date: String,
+    val image: String = "",
+    val address: String = "",
+    val author_id: String = "",
+    val expiration_date: String = "",
     val is_delivered: Boolean = false,
     val id: String? = null
 ) {

@@ -4,12 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.foodguard.data.user.UserRepository
 import com.example.foodguard.roomDB.DBHolder
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class PostRepository() {
     private val postsDao = DBHolder.getDatabase().postDad()
@@ -36,46 +39,25 @@ class PostRepository() {
         postsDao.deleteById(id)
     }
 
-    fun getPostById(id: String): PostModel {
-        return postsDao.findById(id)
-    }
-
     fun getPostsByUserId(id: String) : LiveData<List<PostWithAuthor>?> {
         return postsDao.findByUserId(id)
     }
 
-    fun getPostsList(
-        limit: Int,
-        offset: Int,
-        scope: CoroutineScope
-    ): LiveData<List<PostWithAuthor>> {
-        return postsDao.getAllPaginated(limit, offset)
-    }
-
-
-    suspend fun loadPostFromRemoteSource(id: String) = withContext(Dispatchers.IO) {
-        val post =
-            firestoreHandle.document(id).get().await().toObject(PostDTO::class.java)?.toPostModel()
-        if (post != null) {
-            postsDao.upsertAll(post)
-            usersRepository.cacheUserIfNotExisting(post.author_id)
-        }
-
-        return@withContext postsDao.findById(id)
+    fun getPostsList(): LiveData<List<PostWithAuthor>> {
+        return postsDao.getAllPaginated()
     }
 
     suspend fun loadPostsFromRemoteSource() =
         withContext(Dispatchers.IO) {
-         
+            val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+
             val posts = firestoreHandle
                 .get().await().toObjects(PostDTO::class.java).map { it.toPostModel() }
-       
-//            if (posts.isNotEmpty()) {
-//                usersRepository.cacheUsersIfNotExisting(posts.map { it.author_id })
-//                postsDao.upsertAll(*posts.toTypedArray())
-//
-//            }
+                .sortedBy { LocalDateTime.parse(it.expiration_date, dateFormatter) }
 
-            Log.d("loadPostsFromRemoteSource", "posts: $posts")
+            if (posts.isNotEmpty()) {
+                usersRepository.cacheUsersIfNotExisting(posts.map { it.author_id })
+                postsDao.upsertAll(*posts.toTypedArray())
+            }
         }
 }

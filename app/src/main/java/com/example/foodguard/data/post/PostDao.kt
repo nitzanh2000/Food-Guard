@@ -9,8 +9,8 @@ import androidx.room.Upsert
 
 @Dao
 interface PostDao {
-    @Query("SELECT * FROM post LIMIT :limit OFFSET :offset")
-    fun getAllPaginated(limit: Int, offset: Int): LiveData<List<PostWithAuthor>>
+    @Query("SELECT * FROM post")
+    fun getAllPaginated(): LiveData<List<PostWithAuthor>>
 
     @Query("SELECT * FROM post WHERE id = :id")
     fun findById(id: String): PostModel

@@ -26,7 +26,6 @@ import com.example.foodguard.data.PostViewModel
 import com.example.foodguard.data.user.UserModel
 import com.example.foodguard.ui.auth.AuthActivity
 import com.example.foodguard.ui.fragments.PostList.PostAdapter
-import com.example.foodguard.ui.fragments.PostList.PostListFragmentDirections
 import com.example.foodguard.utils.decodeBase64ToImage
 import com.example.foodguard.utils.encodeImageToBase64
 import com.google.firebase.auth.FirebaseAuth
@@ -55,7 +54,7 @@ class EditProfileFragment  : Fragment() {
         context?.let { initPostList(it) }
         viewModel.getAllPostsByUserId(connectedUserId).observe(viewLifecycleOwner, {
             it?.let {
-                if(it.isEmpty()) viewModel.invalidatePosts()
+                if(it.isEmpty()) viewModel.refreshPostsFromRemote()
                 (postsList.adapter as? PostAdapter)?.updatePostsList(it)
             }
 
