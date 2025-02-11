@@ -19,7 +19,7 @@ class PostViewModel : ViewModel() {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            postRepository.loadPostsFromRemoteSource(50, 0)
+            postRepository.loadPostsFromRemoteSource()
         }
     }
 
@@ -33,7 +33,7 @@ class PostViewModel : ViewModel() {
 
     fun invalidatePosts() {
         viewModelScope.launch {
-            postRepository.loadPostsFromRemoteSource(50, 0)
+            postRepository.loadPostsFromRemoteSource()
         }
     }
 

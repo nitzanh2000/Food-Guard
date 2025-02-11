@@ -1,5 +1,6 @@
 package com.example.foodguard.data.post
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.foodguard.data.user.UserRepository
 import com.example.foodguard.roomDB.DBHolder
@@ -63,17 +64,18 @@ class PostRepository() {
         return@withContext postsDao.findById(id)
     }
 
-    suspend fun loadPostsFromRemoteSource(limit: Int, offset: Int) =
-
+    suspend fun loadPostsFromRemoteSource() =
         withContext(Dispatchers.IO) {
          
-            val posts = firestoreHandle.orderBy("post").startAt(offset).limit(limit.toLong())
+            val posts = firestoreHandle
                 .get().await().toObjects(PostDTO::class.java).map { it.toPostModel() }
        
-            if (posts.isNotEmpty()) {
-                usersRepository.cacheUsersIfNotExisting(posts.map { it.author_id })
-                postsDao.upsertAll(*posts.toTypedArray())
+//            if (posts.isNotEmpty()) {
+//                usersRepository.cacheUsersIfNotExisting(posts.map { it.author_id })
+//                postsDao.upsertAll(*posts.toTypedArray())
+//
+//            }
 
-            }
+            Log.d("loadPostsFromRemoteSource", "posts: $posts")
         }
 }
