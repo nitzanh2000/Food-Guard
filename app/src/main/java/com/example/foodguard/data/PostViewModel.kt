@@ -19,21 +19,21 @@ class PostViewModel : ViewModel() {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            postRepository.loadPostsFromRemoteSource(50, 0)
+            postRepository.loadPostsFromRemoteSource()
         }
     }
 
     fun getAllPosts(): LiveData<List<PostWithAuthor>> {
-        return this.postRepository.getPostsList(50, 0, viewModelScope)
+        return this.postRepository.getPostsList()
     }
 
     fun getAllPostsByUserId(id: String): LiveData<List<PostWithAuthor>?> {
         return this.postRepository.getPostsByUserId(id)
     }
 
-    fun invalidatePosts() {
+    fun refreshPostsFromRemote() {
         viewModelScope.launch {
-            postRepository.loadPostsFromRemoteSource(50, 0)
+            postRepository.loadPostsFromRemoteSource()
         }
     }
 
@@ -45,6 +45,7 @@ class PostViewModel : ViewModel() {
             }
             userLiveData.postValue(user)
         }
+
         return userLiveData
     }
 
