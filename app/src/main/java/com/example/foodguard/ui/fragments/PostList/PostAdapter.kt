@@ -13,11 +13,11 @@ import com.example.foodguard.R
 import com.example.foodguard.data.PostViewModel
 import com.example.foodguard.data.post.PostWithAuthor
 import com.example.foodguard.utils.decodeBase64ToImage
+import com.google.firebase.auth.FirebaseAuth
 
 class PostAdapter(val onPostEditClick: (String) -> Unit, val onPostDeleteClick: (String) -> Unit) :
     RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
-
-//    private val viewModel: PostViewModel by activityViewModels()
+    private var connectedUserId : String = FirebaseAuth.getInstance().currentUser!!.uid
 
     class PostViewHolder(postView: View) : RecyclerView.ViewHolder(postView) {
         val description: TextView = postView.findViewById(R.id.post_description)
@@ -65,13 +65,19 @@ class PostAdapter(val onPostEditClick: (String) -> Unit, val onPostDeleteClick: 
         val editButton: ImageButton = holder.itemView.findViewById(R.id.edit_button)
         val deleteButton: ImageButton = holder.itemView.findViewById(R.id.delete_button)
 
+        if(connectedUserId == currentPost?.author?.id) {
+            editButton.visibility = View.VISIBLE
+            deleteButton.visibility = View.VISIBLE
+        } else {
+            editButton.visibility = View.GONE
+            deleteButton.visibility = View.GONE
+        }
+
         editButton.setOnClickListener {
-            // Handle edit button click
             onPostEditClick(currentPost.post.id)
         }
 
         deleteButton.setOnClickListener {
-            // Handle delete button click
             onPostDeleteClick(currentPost.post.id)
         }
 
