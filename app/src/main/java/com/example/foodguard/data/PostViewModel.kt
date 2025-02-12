@@ -31,10 +31,8 @@ class PostViewModel : ViewModel() {
         return this.postRepository.getPostsByUserId(id)
     }
 
-    fun refreshPostsFromRemote() {
-        viewModelScope.launch {
-            postRepository.loadPostsFromRemoteSource()
-        }
+    suspend fun refreshPostsFromRemote() {
+        postRepository.loadPostsFromRemoteSource()
     }
 
     fun getUserById(id: String): LiveData<UserModel?> {

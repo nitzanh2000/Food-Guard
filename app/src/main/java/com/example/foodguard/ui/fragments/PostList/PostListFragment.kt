@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodguard.R
 import com.example.foodguard.data.PostViewModel
+import kotlinx.coroutines.launch
 
 class PostListFragment : Fragment() {
     private lateinit var postsList: RecyclerView
@@ -30,7 +32,11 @@ class PostListFragment : Fragment() {
         context.let { initPostList() }
         // TODO: check if the get all post is selecting ta data also from the server
         viewModel.getAllPosts().observe(viewLifecycleOwner) {
-            if (it.isEmpty()) viewModel.refreshPostsFromRemote()
+            if (it.isEmpty()) {
+                lifecycleScope.launch {
+                    viewModel.refreshPostsFromRemote()
+                }
+            }
             (postsList.adapter as PostAdapter).updatePostsList(it)
         }
 
