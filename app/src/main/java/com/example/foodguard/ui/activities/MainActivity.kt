@@ -49,6 +49,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.menu_home -> {
                     navController.navigate(R.id.postsListFragment)
                     Toast.makeText(this, "home", Toast.LENGTH_SHORT)
+                    lifecycleScope.launch {
+                        Log.d("MainActivity", "Loading posts...")
+                        showLoading(true)
+                        viewModel.refreshPostsFromRemote()
+                        Log.d("", "Posts loaded")
+                        showLoading(false)
+                    }
                     true
                 }
                 R.id.menu_add -> {

@@ -7,12 +7,14 @@
 
     <ProgressBar
         android:id="@+id/loading_spinner"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:visibility="visible"
         android:indeterminate="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:paddingTop="15dp"
+        />
 
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
