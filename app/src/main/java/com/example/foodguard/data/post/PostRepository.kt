@@ -48,14 +48,25 @@ class PostRepository() {
         return postsDao.getAllPaginated()
     }
 
+    suspend fun syncPosts(remotePosts: List<PostModel>) {
+        // Extract IDs of posts from the remote source
+        val remotePostIds = remotePosts.map { it.id }
+        // Insert or update remote posts into the local database
+        postsDao.insertOrUpdate(remotePosts)
+
+        // Delete local posts that are not in the remote source
+        postsDao.deletePostsNotIn(remotePostIds)
+    }
+
+
     suspend fun loadPostsFromRemoteSource() =
         withContext(Dispatchers.IO) {
             val posts = firestoreHandle
                 .get().await().toObjects(PostDTO::class.java).map { it.toPostModel() }
 
-            if (posts.isNotEmpty()) {
-                usersRepository.cacheUsersIfNotExisting(posts.map { it.author_id })
-                postsDao.upsertAll(*posts.toTypedArray())
-            }
+            Log.d("loadPostsFromRemoteSource", "posts: $posts")
+            usersRepository.cacheUsersIfNotExisting(posts.map { it.author_id })
+            syncPosts(posts)
+
         }
 }

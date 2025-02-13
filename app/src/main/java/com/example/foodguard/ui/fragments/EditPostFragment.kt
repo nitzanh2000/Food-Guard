@@ -65,13 +65,7 @@ class EditPostFragment : Fragment() {
             addressAutoComplete.setAdapter(adapter)
         }
 
-        viewModel.getAllAvailablePosts().observe(viewLifecycleOwner, {
-            if (it.isEmpty()) {
-                lifecycleScope.launch {
-                viewModel.refreshPostsFromRemote()
-                }
-            }
-
+        viewModel.getAllPost().observe(viewLifecycleOwner, {
             val postList = it
             currentPostId?.let {
                 val postId = it
