@@ -1,18 +1,16 @@
 package com.example.foodguard.utils
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Base64
 import android.util.Log
-import java.io.ByteArrayOutputStream
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
-import com.google.firebase.auth.FirebaseAuth
-import okhttp3.*
 
 fun downloadImageAndConvertToBase64(imageUrl: String, context: Context, callback: (String?) -> Unit) {
     val client = OkHttpClient()

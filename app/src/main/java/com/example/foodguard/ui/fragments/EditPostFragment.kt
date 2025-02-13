@@ -23,7 +23,6 @@ import com.example.foodguard.R
 import com.example.foodguard.data.PostViewModel
 import com.example.foodguard.data.post.PostModel
 import com.example.foodguard.data.post.PostWithAuthor
-import com.example.foodguard.data.user.UserModel
 import com.example.foodguard.utils.decodeBase64ToImage
 import com.example.foodguard.utils.encodeImageToBase64
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -46,7 +45,6 @@ class EditPostFragment : Fragment() {
     }
 
     private var connectedUserId : String = FirebaseAuth.getInstance().currentUser!!.uid
-    private var mainUser: UserModel? = null
     private val viewModel: PostViewModel by activityViewModels()
 
     private lateinit var imageViewUpload: ImageView

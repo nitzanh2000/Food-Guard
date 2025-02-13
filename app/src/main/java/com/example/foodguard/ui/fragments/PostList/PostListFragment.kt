@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodguard.R
 import com.example.foodguard.data.PostViewModel
-import kotlinx.coroutines.launch
 
 class PostListFragment : Fragment() {
     private lateinit var postsList: RecyclerView

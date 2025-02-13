@@ -4,16 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.foodguard.data.user.UserRepository
 import com.example.foodguard.roomDB.DBHolder
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class PostRepository() {
     private val postsDao = DBHolder.getDatabase().postDad()

@@ -33,6 +33,7 @@ class PostViewModel : ViewModel() {
     fun getAllAvailablePosts(): LiveData<List<PostWithAuthor>> {
         return getAllPost().map { posts -> posts.filter { isAvailablePost(it) } }
     }
+
     fun getAllPost(): LiveData<List<PostWithAuthor>> {
         val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
