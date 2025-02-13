@@ -51,14 +51,11 @@ class PostRepository() {
     suspend fun syncPosts(remotePosts: List<PostModel>) {
         // Extract IDs of posts from the remote source
         val remotePostIds = remotePosts.map { it.id }
-        Log.d("syncPosts", "remotePostIds: $remotePostIds")
         // Insert or update remote posts into the local database
         postsDao.insertOrUpdate(remotePosts)
-        Log.d("syncPosts", "postsDao.getAllPosts(): ${postsDao.getAllPosts()}")
 
         // Delete local posts that are not in the remote source
         postsDao.deletePostsNotIn(remotePostIds)
-        Log.d("syncPosts", "postsDao.getAllPosts(): ${postsDao.getAllPosts()}")
     }
 
 
