@@ -8,7 +8,7 @@ import com.example.foodguard.data.user.UserDao
 import com.example.foodguard.data.user.UserModel
 
 @Database(
-    entities = [PostModel::class, UserModel::class], version = 3, exportSchema = true
+    entities = [PostModel::class, UserModel::class], version = 4, exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao

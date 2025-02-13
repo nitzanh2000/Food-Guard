@@ -6,7 +6,7 @@
     "entities": [
       {
         "tableName": "post",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `author_id` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL, `address` TEXT NOT NULL, `serving` INTEGER NOT NULL, `expiration_date` TEXT NOT NULL, `is_delivered` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`author_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `author_id` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL, `address` TEXT NOT NULL, `serving` INTEGER NOT NULL, `expiration_date` TEXT NOT NULL, `delivered` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`author_id`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -51,8 +51,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "is_delivered",
-            "columnName": "is_delivered",
+            "fieldPath": "delivered",
+            "columnName": "delivered",
             "affinity": "INTEGER",
             "notNull": true
           }

@@ -80,7 +80,7 @@ class EditPostFragment : Fragment() {
             address.setText(currentPost?.post?.address)
             date.text = currentPost?.post?.expiration_date
             servings.text = currentPost?.post?.serving.toString()
-            isDelivered.isChecked = currentPost?.post?.is_delivered ?: false
+            isDelivered.isChecked = currentPost?.post?.delivered ?: false
 
             val profileImage = view.findViewById<ImageView>(R.id.profile_image)
             val username = view.findViewById<TextView>(R.id.username)
@@ -118,7 +118,7 @@ class EditPostFragment : Fragment() {
                     serving = servings.text.toString().toInt(),
                     author_id = connectedUserId,
                     image = base64Image,
-                    is_delivered = isDelivered.isChecked
+                    delivered = isDelivered.isChecked
                 )
                 viewModel.savePost(newPost);
 

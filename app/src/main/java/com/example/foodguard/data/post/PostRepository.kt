@@ -18,7 +18,7 @@ class PostRepository() {
     suspend fun addPost(vararg posts: PostModel) = withContext(Dispatchers.IO) {
         val batchHandle = Firebase.firestore.batch()
         posts.forEach {
-            batchHandle.set(firestoreHandle.document(it.id), it)
+            batchHandle.set(firestoreHandle.document(it.id), it.toPostDto())
         }
 
         batchHandle.commit().await()
@@ -26,7 +26,7 @@ class PostRepository() {
     }
 
     suspend fun editPost(post: PostModel) = withContext(Dispatchers.IO) {
-        firestoreHandle.document(post.id).set(post).await()
+        firestoreHandle.document(post.id).set(post.toPostDto()).await()
         postsDao.update(post)
     }
 

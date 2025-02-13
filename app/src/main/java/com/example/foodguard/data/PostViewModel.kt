@@ -52,7 +52,7 @@ class PostViewModel : ViewModel() {
             Log.e("Date", "Invalid date")
         }
 
-        return valid && !post.post.is_delivered
+        return valid && !post.post.delivered
     }
 
     fun getAllPostsByUserId(id: String): LiveData<List<PostWithAuthor>?> {
