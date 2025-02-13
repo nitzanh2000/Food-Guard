@@ -1,6 +1,5 @@
 package com.example.foodguard.ui.fragments.PostList
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodguard.R
+import com.example.foodguard.data.PostViewModel
 import com.example.foodguard.data.post.PostWithAuthor
 import com.example.foodguard.utils.decodeBase64ToImage
 import com.google.firebase.auth.FirebaseAuth
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class PostAdapter(val onPostEditClick: (String) -> Unit, val onPostDeleteClick: (String) -> Unit) :
     RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
@@ -77,10 +74,10 @@ class PostAdapter(val onPostEditClick: (String) -> Unit, val onPostDeleteClick: 
             deleteButton.visibility = View.GONE
         }
 
-        if(isUnavailablePost(currentPost)) {
-            holder.unAvailableMark.visibility = View.VISIBLE
-        } else {
+        if(PostViewModel().isAvailablePost(currentPost)) {
             holder.unAvailableMark.visibility = View.GONE
+        } else {
+            holder.unAvailableMark.visibility = View.VISIBLE
         }
 
         editButton.setOnClickListener {
@@ -96,21 +93,5 @@ class PostAdapter(val onPostEditClick: (String) -> Unit, val onPostDeleteClick: 
     fun updatePostsList(newPostsList: List<PostWithAuthor>) {
         this.posts = newPostsList
         notifyDataSetChanged()
-    }
-
-    private fun isUnavailablePost(post : PostWithAuthor): Boolean {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:m", Locale.getDefault())
-        val formattedExpirationDate = dateFormat.parse(post.post.expiration_date)
-
-        var expired = false;
-
-        try {
-            expired = formattedExpirationDate.before(Date())
-        }
-        catch (e : Exception ){
-            Log.w("Date", "Invalid date")
-        }
-
-        return expired || post.post.is_delivered
     }
 }

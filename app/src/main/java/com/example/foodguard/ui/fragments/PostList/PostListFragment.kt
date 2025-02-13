@@ -30,13 +30,8 @@ class PostListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postsList = view.findViewById(R.id.posts_list)
         context.let { initPostList() }
-        // TODO: check if the get all post is selecting ta data also from the server
-        viewModel.getAllPosts().observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                lifecycleScope.launch {
-                    viewModel.refreshPostsFromRemote()
-                }
-            }
+
+        viewModel.getAllAvailablePosts().observe(viewLifecycleOwner) {
             (postsList.adapter as PostAdapter).updatePostsList(it)
         }
 

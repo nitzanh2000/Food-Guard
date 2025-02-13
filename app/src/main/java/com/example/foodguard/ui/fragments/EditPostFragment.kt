@@ -65,7 +65,7 @@ class EditPostFragment : Fragment() {
             addressAutoComplete.setAdapter(adapter)
         }
 
-        viewModel.getAllPosts().observe(viewLifecycleOwner, {
+        viewModel.getAllAvailablePosts().observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 lifecycleScope.launch {
                 viewModel.refreshPostsFromRemote()
@@ -80,7 +80,7 @@ class EditPostFragment : Fragment() {
 
             val description = view.findViewById<TextView>(R.id.description_input)
             val address = view.findViewById<AutoCompleteTextView>(R.id.address_input)
-            val date = view.findViewById<TextView>(R.id.date_time_input) // TODO: change to date picker
+            val date = view.findViewById<TextView>(R.id.date_time_input)
             val servings = view.findViewById<TextView>(R.id.servings_input)
             val isDelivered = view.findViewById<CheckBox>(R.id.mark_as_delivered)
 

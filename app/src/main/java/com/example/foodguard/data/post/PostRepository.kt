@@ -50,11 +50,8 @@ class PostRepository() {
 
     suspend fun loadPostsFromRemoteSource() =
         withContext(Dispatchers.IO) {
-            val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-
             val posts = firestoreHandle
                 .get().await().toObjects(PostDTO::class.java).map { it.toPostModel() }
-                .sortedBy { LocalDateTime.parse(it.expiration_date, dateFormatter) }
 
             if (posts.isNotEmpty()) {
                 usersRepository.cacheUsersIfNotExisting(posts.map { it.author_id })
