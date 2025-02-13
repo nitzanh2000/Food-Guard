@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "da1afd719701d4c877b143574954a041",
+    "version": 4,
+    "identityHash": "df213fffa61d80ed25a2358fee4f8e26",
     "entities": [
       {
         "tableName": "post",
@@ -120,7 +120,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'da1afd719701d4c877b143574954a041')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'df213fffa61d80ed25a2358fee4f8e26')"
     ]
   }
 }

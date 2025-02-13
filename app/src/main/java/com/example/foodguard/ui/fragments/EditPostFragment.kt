@@ -23,7 +23,6 @@ import com.example.foodguard.R
 import com.example.foodguard.data.PostViewModel
 import com.example.foodguard.data.post.PostModel
 import com.example.foodguard.data.post.PostWithAuthor
-import com.example.foodguard.data.user.UserModel
 import com.example.foodguard.utils.decodeBase64ToImage
 import com.example.foodguard.utils.encodeImageToBase64
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -46,7 +45,6 @@ class EditPostFragment : Fragment() {
     }
 
     private var connectedUserId : String = FirebaseAuth.getInstance().currentUser!!.uid
-    private var mainUser: UserModel? = null
     private val viewModel: PostViewModel by activityViewModels()
 
     private lateinit var imageViewUpload: ImageView
@@ -65,7 +63,7 @@ class EditPostFragment : Fragment() {
             addressAutoComplete.setAdapter(adapter)
         }
 
-        viewModel.getAllPosts().observe(viewLifecycleOwner, {
+        viewModel.getAllPost().observe(viewLifecycleOwner, {
             val postList = it
             currentPostId?.let {
                 val postId = it
@@ -74,7 +72,7 @@ class EditPostFragment : Fragment() {
 
             val description = view.findViewById<TextView>(R.id.description_input)
             val address = view.findViewById<AutoCompleteTextView>(R.id.address_input)
-            val date = view.findViewById<TextView>(R.id.date_time_input) // TODO: change to date picker
+            val date = view.findViewById<TextView>(R.id.date_time_input)
             val servings = view.findViewById<TextView>(R.id.servings_input)
             val isDelivered = view.findViewById<CheckBox>(R.id.mark_as_delivered)
 
@@ -82,7 +80,7 @@ class EditPostFragment : Fragment() {
             address.setText(currentPost?.post?.address)
             date.text = currentPost?.post?.expiration_date
             servings.text = currentPost?.post?.serving.toString()
-            isDelivered.isChecked = currentPost?.post?.is_delivered ?: false
+            isDelivered.isChecked = currentPost?.post?.delivered ?: false
 
             val profileImage = view.findViewById<ImageView>(R.id.profile_image)
             val username = view.findViewById<TextView>(R.id.username)
@@ -120,7 +118,7 @@ class EditPostFragment : Fragment() {
                     serving = servings.text.toString().toInt(),
                     author_id = connectedUserId,
                     image = base64Image,
-                    is_delivered = isDelivered.isChecked
+                    delivered = isDelivered.isChecked
                 )
                 viewModel.savePost(newPost);
 

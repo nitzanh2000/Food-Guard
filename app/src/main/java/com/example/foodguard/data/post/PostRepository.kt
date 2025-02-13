@@ -4,16 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.foodguard.data.user.UserRepository
 import com.example.foodguard.roomDB.DBHolder
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class PostRepository() {
     private val postsDao = DBHolder.getDatabase().postDad()
@@ -23,7 +18,7 @@ class PostRepository() {
     suspend fun addPost(vararg posts: PostModel) = withContext(Dispatchers.IO) {
         val batchHandle = Firebase.firestore.batch()
         posts.forEach {
-            batchHandle.set(firestoreHandle.document(it.id), it)
+            batchHandle.set(firestoreHandle.document(it.id), it.toPostDto())
         }
 
         batchHandle.commit().await()
@@ -31,7 +26,7 @@ class PostRepository() {
     }
 
     suspend fun editPost(post: PostModel) = withContext(Dispatchers.IO) {
-        firestoreHandle.document(post.id).set(post).await()
+        firestoreHandle.document(post.id).set(post.toPostDto()).await()
         postsDao.update(post)
     }
 
@@ -58,16 +53,12 @@ class PostRepository() {
         postsDao.deletePostsNotIn(remotePostIds)
     }
 
-
     suspend fun loadPostsFromRemoteSource() =
         withContext(Dispatchers.IO) {
-            val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-
             val posts = firestoreHandle
                 .get().await().toObjects(PostDTO::class.java).map { it.toPostModel() }
-                .sortedBy { LocalDateTime.parse(it.expiration_date, dateFormatter) }
 
-            Log.d("loadPostsFromRemoteSource", "posts: $posts")
+            Log.i("loadPostsFromRemoteSource", "Loaded Successfully")
             usersRepository.cacheUsersIfNotExisting(posts.map { it.author_id })
             syncPosts(posts)
 
