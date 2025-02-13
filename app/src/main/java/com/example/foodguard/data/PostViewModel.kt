@@ -24,12 +24,6 @@ class PostViewModel : ViewModel() {
     private val postRepository = PostRepository()
     private val usersRepository = UserRepository()
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            postRepository.loadPostsFromRemoteSource()
-        }
-    }
-
     fun getAllAvailablePosts(): LiveData<List<PostWithAuthor>> {
         return getAllPost().map { posts -> posts.filter { isAvailablePost(it) } }
     }
@@ -55,7 +49,7 @@ class PostViewModel : ViewModel() {
             valid = formattedExpirationDate.after(Date())
         }
         catch (e : Exception ){
-            Log.w("Date", "Invalid date")
+            Log.e("Date", "Invalid date")
         }
 
         return valid && !post.post.is_delivered

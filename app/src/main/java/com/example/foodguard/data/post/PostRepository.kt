@@ -53,13 +53,12 @@ class PostRepository() {
         postsDao.deletePostsNotIn(remotePostIds)
     }
 
-
     suspend fun loadPostsFromRemoteSource() =
         withContext(Dispatchers.IO) {
             val posts = firestoreHandle
                 .get().await().toObjects(PostDTO::class.java).map { it.toPostModel() }
 
-            Log.d("loadPostsFromRemoteSource", "posts: $posts")
+            Log.i("loadPostsFromRemoteSource", "Loaded Successfully")
             usersRepository.cacheUsersIfNotExisting(posts.map { it.author_id })
             syncPosts(posts)
 
