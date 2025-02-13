@@ -13,7 +13,9 @@ class AuthViewModel: ViewModel() {
 
     fun register(onFinishUi: () -> Unit, context: Context) {
         viewModelScope.launch(Dispatchers.Main) {
-            usersRepository.upsertUser(UserModel.fromFirebaseAuth(context))
+            if (usersRepository.getUserByUid(UserModel.fromFirebaseAuth(context).id) == null){
+                usersRepository.upsertUser(UserModel.fromFirebaseAuth(context))
+            }
             onFinishUi()
         }
     }
