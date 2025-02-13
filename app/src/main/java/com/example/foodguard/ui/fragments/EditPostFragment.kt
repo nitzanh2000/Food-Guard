@@ -66,12 +66,6 @@ class EditPostFragment : Fragment() {
         }
 
         viewModel.getAllPosts().observe(viewLifecycleOwner, {
-            if (it.isEmpty()) {
-                lifecycleScope.launch {
-                viewModel.refreshPostsFromRemote()
-                }
-            }
-
             val postList = it
             currentPostId?.let {
                 val postId = it

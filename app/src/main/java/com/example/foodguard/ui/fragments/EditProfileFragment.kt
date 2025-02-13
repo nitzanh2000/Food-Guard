@@ -56,11 +56,6 @@ class EditProfileFragment  : Fragment() {
         context?.let { initPostList(it) }
         viewModel.getAllPostsByUserId(connectedUserId).observe(viewLifecycleOwner, {
             it?.let {
-                if(it.isEmpty()) {
-                    lifecycleScope.launch {
-                        viewModel.refreshPostsFromRemote()
-                    }
-                }
                 (postsList.adapter as? PostAdapter)?.updatePostsList(it)
             }
 

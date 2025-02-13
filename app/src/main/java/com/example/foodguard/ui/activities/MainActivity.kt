@@ -29,10 +29,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         lifecycleScope.launch {
-            Log.d("MainActivity", "Loading posts...")
             showLoading(true)
             viewModel.refreshPostsFromRemote()
-            Log.d("", "Posts loaded")
             showLoading(false)
         }
 
@@ -50,10 +48,8 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.postsListFragment)
                     Toast.makeText(this, "home", Toast.LENGTH_SHORT)
                     lifecycleScope.launch {
-                        Log.d("MainActivity", "Loading posts...")
                         showLoading(true)
                         viewModel.refreshPostsFromRemote()
-                        Log.d("", "Posts loaded")
                         showLoading(false)
                     }
                     true

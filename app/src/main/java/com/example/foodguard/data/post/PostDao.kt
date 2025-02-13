@@ -3,6 +3,8 @@ package com.example.foodguard.data.post
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Upsert
@@ -29,4 +31,19 @@ interface PostDao {
 
     @Update
     fun update(review: PostModel)
+
+
+    // Insert or update (upsert) posts
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrUpdate(posts: List<PostModel>)
+
+    // Delete posts not in the provided list of IDs
+    @Query("DELETE FROM post WHERE id NOT IN (:postIds)")
+    suspend fun deletePostsNotIn(postIds: List<String>)
+
+    // Get all current local posts
+    @Query("SELECT * FROM post")
+    suspend fun getAllPosts(): List<PostModel>
+
+
 }
